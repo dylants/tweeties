@@ -1,0 +1,16 @@
+{
+  "ignore": [
+    ".git",
+    "build",
+    "node_modules",
+    "public"
+  ],
+  "verbose": true,
+  "watch": [
+    "app/config",
+    "app/controllers",
+    "app/lib",
+    "app/routes",
+    "app/views"
+  ]
+}
