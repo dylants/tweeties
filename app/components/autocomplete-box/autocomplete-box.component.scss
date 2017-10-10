@@ -11,6 +11,10 @@
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    color: $swatch04;
+  }
 }
 
 .options {
