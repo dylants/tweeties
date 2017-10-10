@@ -1,18 +1,25 @@
 @import '../../theme/swatches';
 
+.form {
+  margin: 0;
+}
+
 .textarea {
   resize: none;
   width: 400px;
   height: 100px;
-  border: 1px solid $swatch03;
-  border-radius: 3px;
+  border: 2px solid $swatch07;
+  border-radius: 9px;
   padding: 8px;
+  font-size: 14px;
+  letter-spacing: 0.1px;
 
   &:focus {
     outline: none;
   }
 
   &::placeholder {
+    font-weight: 300;
     color: $swatch04;
   }
 }
@@ -23,6 +30,9 @@
   display: inline;
   // move up a pixel to hide the top border
   margin-top: -1px;
+  background-color: $swatch02;
+  margin-left: 4px;
+  box-shadow: 0 0 4px $swatch03;
 }
 
 .option {

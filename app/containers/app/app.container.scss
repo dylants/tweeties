@@ -1,12 +1,14 @@
 @import '../../theme/resets.scss';
+@import '../../theme/swatches.scss';
 
 body {
   margin: 8px;
+  background-color: $swatch06;
 }
 
 body,
 input {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .app {

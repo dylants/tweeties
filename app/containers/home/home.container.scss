@@ -1,3 +1,46 @@
+@import '../../theme/swatches';
+
 .main {
   margin-top: 24px;
+}
+
+.heading {
+  font-weight: 300;
+  padding-bottom: 24px;
+
+  .name {
+    font-size: 24px;
+    margin-bottom: 2px;
+  }
+
+  .tagline {
+    font-size: 16px;
+    margin-left: 2px;
+  }
+}
+
+.miniHeading {
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+}
+
+.tweets {
+  margin-top: 24px;
+}
+
+.tweet {
+  font-size: 14px;
+  letter-spacing: 0.1px;
+  padding: 12px 6px;
+  background-color: $swatch02;
+
+  &:nth-child(even) {
+    background-color: $swatch08;
+  }
+}
+
+.noTweets {
+  text-align: center;
 }

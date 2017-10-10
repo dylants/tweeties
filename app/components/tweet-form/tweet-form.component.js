@@ -4,6 +4,25 @@ import React, { Component } from 'react';
 import style from './tweet-form.component.scss';
 
 export default class TweetForm extends Component {
+  handleKeyPress = (event) => {
+    // when the user hits enter, "submit the form"
+    if (event.key === 'Enter') {
+      // don't submit with an empty tweet
+      if (!this.props.text) {
+        event.preventDefault();
+        return;
+      }
+
+      // don't submit on shift + enter
+      if (event.shiftKey) {
+        return;
+      }
+
+      event.preventDefault();
+      this.props.handleSubmit();
+    }
+  }
+
   handleTextChange = (event) => {
     const { value } = event.target;
 
@@ -19,7 +38,6 @@ export default class TweetForm extends Component {
 
   render() {
     let optionsToRender;
-
     if (this.props.options) {
       optionsToRender = this.props.options.map((option, index) => (
         <button
@@ -40,20 +58,28 @@ export default class TweetForm extends Component {
       ));
     }
 
+    let optionsBox;
+    if (optionsToRender && optionsToRender.length) {
+      optionsBox = (
+        <div className={style.options}>
+          {optionsToRender}
+        </div>
+      );
+    }
+
     return (
       <div>
-        <div>
+        <form className={style.form}>
           <textarea
             className={style.textarea}
             onChange={this.handleTextChange}
+            onKeyPress={this.handleKeyPress}
             placeholder="What's happening?"
             ref={textRef => this.textRef = textRef}
             value={this.props.text}
           />
-        </div>
-        <div className={style.options}>
-          {optionsToRender}
-        </div>
+        </form>
+        {optionsBox}
       </div>
     );
   }
@@ -61,6 +87,7 @@ export default class TweetForm extends Component {
 
 TweetForm.propTypes = {
   handleSelectOption: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
   handleTextChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     avatar: PropTypes.string.isRequired,
