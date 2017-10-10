@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -5,31 +6,69 @@ import style from './autocomplete-box.component.scss';
 
 export default class AutocompleteBox extends Component {
   state = {
+    showOptions: false,
     userText: '',
   }
 
-  handleChange = (event) => {
+  handleUserTextChange = (event) => {
+    const { value } = event.target;
+
+    let showOptions = false;
+    // if the last 'word' starts with an '@'
+    if (_(value)
+        .split(' ')
+        .last()
+        .startsWith('@')) {
+      showOptions = true;
+    }
+
     this.setState({
-      [event.target.name]: event.target.value,
+      showOptions,
+      userText: value,
     });
+  }
+
+  selectOption = (optionIndex) => {
+    let { userText } = this.state;
+    const { username } = this.props.options[optionIndex];
+
+    // replace the last word with the username from the selected option
+    userText = _(userText)
+                .split(' ')
+                .dropRight()
+                // add a space to the end to make it more usable
+                .concat(`${username} `)
+                .join(' ');
+
+    this.setState({
+      showOptions: false,
+      userText,
+    });
+
+    // focus the text input again
+    this.userTextRef.focus();
   }
 
   render() {
     let optionsToRender;
 
-    if (this.state.userText) {
-      optionsToRender = this.props.options.map(option => (
-        <div className={style.option} key={option.username}>
+    if (this.state.showOptions) {
+      optionsToRender = this.props.options.map((option, index) => (
+        <button
+          className={style.option}
+          key={option.username}
+          onClick={() => this.selectOption(index)}
+        >
           <div className={style.avatarContainer}>
             <img
+              alt=""
               className={style.avatar}
               src={option.avatar}
-              alt=""
             />
           </div>
           <div className={style.username}>{option.username}</div>
           <div className={style.name}>{option.name}</div>
-        </div>
+        </button>
       ));
     }
 
@@ -38,10 +77,10 @@ export default class AutocompleteBox extends Component {
         <div>
           <textarea
             className={style.textarea}
-            name="userText"
+            onChange={this.handleUserTextChange}
             placeholder="What's happening?"
+            ref={userTextRef => this.userTextRef = userTextRef}
             value={this.state.userText}
-            onChange={this.handleChange}
           />
         </div>
         <div className={style.options}>

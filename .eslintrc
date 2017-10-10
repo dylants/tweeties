@@ -14,3 +14,5 @@ rules:
   no-underscore-dangle: 0
   # https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
   react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+  # this rule causes problems with refs within components
+  no-return-assign: 0
