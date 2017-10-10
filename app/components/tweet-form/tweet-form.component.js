@@ -1,58 +1,26 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import style from './tweet-form.component.scss';
 
 export default class TweetForm extends Component {
-  state = {
-    showOptions: false,
-    userText: '',
-  }
-
-  handleUserTextChange = (event) => {
+  handleTextChange = (event) => {
     const { value } = event.target;
 
-    let showOptions = false;
-    // if the last 'word' starts with an '@'
-    if (_(value)
-        .split(' ')
-        .last()
-        .startsWith('@')) {
-      showOptions = true;
-    }
-
-    this.setState({
-      showOptions,
-      userText: value,
-    });
+    this.props.handleTextChange(value);
   }
 
   selectOption = (optionIndex) => {
-    let { userText } = this.state;
-    const { username } = this.props.options[optionIndex];
-
-    // replace the last word with the username from the selected option
-    userText = _(userText)
-                .split(' ')
-                .dropRight()
-                // add a space to the end to make it more usable
-                .concat(`${username} `)
-                .join(' ');
-
-    this.setState({
-      showOptions: false,
-      userText,
-    });
+    this.props.handleSelectOption(optionIndex);
 
     // focus the text input again
-    this.userTextRef.focus();
+    this.textRef.focus();
   }
 
   render() {
     let optionsToRender;
 
-    if (this.state.showOptions) {
+    if (this.props.options) {
       optionsToRender = this.props.options.map((option, index) => (
         <button
           className={style.option}
@@ -77,10 +45,10 @@ export default class TweetForm extends Component {
         <div>
           <textarea
             className={style.textarea}
-            onChange={this.handleUserTextChange}
+            onChange={this.handleTextChange}
             placeholder="What's happening?"
-            ref={userTextRef => this.userTextRef = userTextRef}
-            value={this.state.userText}
+            ref={textRef => this.textRef = textRef}
+            value={this.props.text}
           />
         </div>
         <div className={style.options}>
@@ -92,9 +60,12 @@ export default class TweetForm extends Component {
 }
 
 TweetForm.propTypes = {
+  handleSelectOption: PropTypes.func.isRequired,
+  handleTextChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   })).isRequired,
+  text: PropTypes.string.isRequired,
 };
