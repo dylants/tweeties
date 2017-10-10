@@ -2,9 +2,9 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import style from './autocomplete-box.component.scss';
+import style from './tweet-form.component.scss';
 
-export default class AutocompleteBox extends Component {
+export default class TweetForm extends Component {
   state = {
     showOptions: false,
     userText: '',
@@ -91,7 +91,7 @@ export default class AutocompleteBox extends Component {
   }
 }
 
-AutocompleteBox.propTypes = {
+TweetForm.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,

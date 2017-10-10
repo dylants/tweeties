@@ -1,6 +1,6 @@
 {
-  "name": "autocomplete-tweets",
-  "description": "You should just use twitter",
+  "name": "tweeties",
+  "description": "The Tweets of Champions",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",

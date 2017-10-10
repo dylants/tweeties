@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AutocompleteBox from '../../components/autocomplete-box/autocomplete-box.component';
+import TweetForm from '../../components/tweet-form/tweet-form.component';
 
 import { generateOptions } from '../../config/mocks/generators';
 
@@ -10,7 +10,7 @@ export default function Home() {
   const options = generateOptions();
   return (
     <div className={style.main}>
-      <AutocompleteBox
+      <TweetForm
         options={options}
       />
     </div>
