@@ -1,0 +1,52 @@
+@import '../../theme/swatches';
+
+.textarea {
+  resize: none;
+  width: 400px;
+  height: 100px;
+  border: 1px solid $swatch03;
+  border-radius: 3px;
+  padding: 8px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.options {
+  border: 1px solid $swatch03;
+  position: absolute;
+  display: inline;
+  // move up a pixel to hide the top border
+  margin-top: -1px;
+}
+
+.option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.avatarContainer {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.username {
+  color: $swatch01;
+  padding-left: 8px;
+}
+
+.name {
+  color: $swatch04;
+  padding-left: 8px;
+}
