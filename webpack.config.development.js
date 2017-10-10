@@ -4,7 +4,6 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -21,9 +20,6 @@ function getPlugins() {
     // new BundleAnalyzerPlugin({
     //   openAnalyzer: false,
     // }),
-
-    // https://github.com/lodash/lodash-webpack-plugin
-    new LodashModuleReplacementPlugin(),
 
     // https://github.com/jantimon/html-webpack-plugin
     new HtmlWebpackPlugin({
@@ -99,7 +95,7 @@ function getLoaders() {
           // https://webpack.js.org/guides/migrating/
           presets: [['env', { modules: false }], 'stage-2', 'react'],
           // in addition to the plugins normally used, include hot loader here as well
-          plugins: ['transform-strict-mode', 'lodash', 'react-hot-loader/babel'],
+          plugins: ['transform-strict-mode', 'react-hot-loader/babel'],
         },
       },
     }, {
