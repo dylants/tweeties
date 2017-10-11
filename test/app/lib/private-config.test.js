@@ -29,9 +29,9 @@ describe('the private-config library', () => {
       privateConfigData = require('./private-config.test.json');
     });
 
-    describe('getToken', () => {
-      it('should return the token data', () => {
-        expect(privateConfig.getToken()).toEqual(privateConfigData.token);
+    describe('getTwitterConfig', () => {
+      it('should return the twitter config', () => {
+        expect(privateConfig.getTwitterConfig()).toEqual(privateConfigData.twitter);
       });
     });
   });
@@ -54,9 +54,9 @@ describe('the private-config library', () => {
       privateConfig = require(MODULE_PATH);
     });
 
-    describe('getToken', () => {
+    describe('getTwitterConfig', () => {
       it('should return the null', () => {
-        expect(privateConfig.getToken()).toBeNull();
+        expect(privateConfig.getTwitterConfig()).toBeNull();
       });
     });
   });

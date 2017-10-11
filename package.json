@@ -18,6 +18,7 @@
     "lint:eslint": "eslint .",
     "lint:sass-lint": "sass-lint -c ./.sass-lint.yml './app/**/*.scss' -v",
     "lint": "npm run lint:eslint && npm run lint:sass-lint",
+    "mock": "MOCK=true npm start",
     "production-build": "npm run build && npm run clean:node_modules && npm install --production",
     "production": "NODE_ENV=production node ./build/config/server.js",
     "reinstall": "npm run clean && npm install",
@@ -50,7 +51,8 @@
     "react-router-redux": "5.0.0-alpha.6",
     "redux": "3.6.0",
     "redux-logger": "3.0.6",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "twitter": "1.7.1"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",

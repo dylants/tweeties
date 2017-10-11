@@ -26,6 +26,6 @@ const PRIVATE_CONFIG = loadPrivateConfig();
  *                     ACCESSORS
  * *****************************************************/
 
-export function getToken() {
-  return PRIVATE_CONFIG ? PRIVATE_CONFIG.token : null;
+export function getTwitterConfig() {
+  return PRIVATE_CONFIG ? PRIVATE_CONFIG.twitter : null;
 }
