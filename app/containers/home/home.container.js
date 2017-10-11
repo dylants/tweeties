@@ -5,15 +5,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { clearTwitterUsers, searchTwitterUsers } from '../../actions/twitter.actions';
+import config from '../../config';
 
 import TweetForm from '../../components/tweet-form/tweet-form.component';
 
 import style from './home.container.scss';
 
 class Home extends Component {
-  state = {
-    tweet: '',
-    tweets: [],
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tweet: '',
+      tweets: [],
+    };
+
+    // timeout used to delay searching until user stops typing
+    this.searchTwitterUsersTimeout = null;
   }
 
   handleSelectUser = (userIndex) => {
@@ -55,9 +63,18 @@ class Home extends Component {
     // if the last 'word' starts with an '@', and it's more than just the '@' sign,
     // we need to search users
     if (lastWord.startsWith('@') && lastWord.length > 1) {
-      // grab the word without the '@' sign
-      const wordOnly = lastWord.slice(1);
-      this.props.searchTwitterUsers(wordOnly);
+      // if we're already waiting to search, clear the last search
+      if (this.searchTwitterUsersTimeout) {
+        clearTimeout(this.searchTwitterUsersTimeout);
+      }
+
+      // wrap the search in a timeout to avoid too many searches while the user is typing
+      // (essentially wait for them to pause)
+      this.searchTwitterUsersTimeout = setTimeout(() => {
+        // grab the word without the '@' sign
+        const wordOnly = lastWord.slice(1);
+        this.props.searchTwitterUsers(wordOnly);
+      }, config.searchTwitterUsersDelay);
     } else {
       // else if there are users, we should clear them
       const { users } = this.props.twitterState;
