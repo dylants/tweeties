@@ -8,7 +8,8 @@ const client = new Twitter(getTwitterConfig());
 export function buildUsersUI(user) {
   return {
     avatar: user.profile_image_url_https || '',
-    username: user.screen_name || '',
+    // prepend the screen_name with an '@' symbol for the UI
+    username: user.screen_name ? `@${user.screen_name}` : '',
     name: user.name || '',
   };
 }

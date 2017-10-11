@@ -36,7 +36,7 @@ describe('the twitter library', () => {
         }),
       ).toEqual({
         avatar: 'https://foo.com',
-        username: 'My Screen Name',
+        username: '@My Screen Name',
         name: 'My Name',
       });
     });
@@ -59,7 +59,7 @@ describe('the twitter library', () => {
           .then((users) => {
             expect(users).toEqual([{
               avatar: 'https://foo.com',
-              username: 'My Screen Name',
+              username: '@My Screen Name',
               name: 'My Name',
             }]);
           }),
@@ -92,7 +92,7 @@ describe('the twitter library', () => {
               expect(users.length).toEqual(5);
               expect(users[0]).toEqual({
                 avatar: 'https://foo.com',
-                username: 'My Screen Name',
+                username: '@My Screen Name',
                 name: 'My Name',
               });
             }),

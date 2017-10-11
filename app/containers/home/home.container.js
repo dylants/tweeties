@@ -49,12 +49,15 @@ class Home extends Component {
   }
 
   handleTextChange = (text) => {
-    // if the last 'word' starts with an '@', we need to search users
-    if (_(text)
-        .split(' ')
-        .last()
-        .startsWith('@')) {
-      this.props.searchTwitterUsers();
+    // our twitter user search only deals with the last word at the moment...
+    const lastWord = _(text).split(' ').last();
+
+    // if the last 'word' starts with an '@', and it's more than just the '@' sign,
+    // we need to search users
+    if (lastWord.startsWith('@') && lastWord.length > 1) {
+      // grab the word without the '@' sign
+      const wordOnly = lastWord.slice(1);
+      this.props.searchTwitterUsers(wordOnly);
     } else {
       // else if there are users, we should clear them
       const { users } = this.props.twitterState;
