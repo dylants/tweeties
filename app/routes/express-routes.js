@@ -1,6 +1,9 @@
+import { searchUsers } from '../controllers/twitter.controller';
 import render from '../controllers/render.controller';
 
 module.exports = (router) => {
+  router.route('/api/twitter/users/search').get(searchUsers);
+
   // if at this point we don't have a route match for /api, return 404
   router.route('/api/*').all((req, res) =>
     res.status(404).send({
