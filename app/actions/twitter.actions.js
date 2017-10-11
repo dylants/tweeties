@@ -8,6 +8,7 @@ import {
   SEARCHING_TWITTER_USERS,
   SEARCHING_TWITTER_USERS_ERROR,
   SEARCHING_TWITTER_USERS_SUCCESS,
+  CLEAR_TWITTER_USERS,
 } from '../constants/action-types';
 
 function searchingTwitterUsers() {
@@ -45,4 +46,10 @@ export function searchTwitterUsers(username) {
       .then(response => dispatch(searchingTwitterUsersSuccess(response)))
       .catch(error => handleHttpError(dispatch, error, searchingTwitterUsersError));
   };
+}
+
+export function clearTwitterUsers() {
+  return dispatch => Promise.resolve(dispatch({
+    type: CLEAR_TWITTER_USERS,
+  }));
 }

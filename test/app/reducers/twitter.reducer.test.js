@@ -94,5 +94,17 @@ describe('the twitter reducer', () => {
         users: [],
       });
     });
+
+    it('should handle CLEAR_TWITTER_USERS', () => {
+      expect(
+        reducer(state, {
+          type: types.CLEAR_TWITTER_USERS,
+        }),
+      ).toEqual({
+        loading: false,
+        error: null,
+        users: [],
+      });
+    });
   });
 });

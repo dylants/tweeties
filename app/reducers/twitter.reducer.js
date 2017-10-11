@@ -3,6 +3,7 @@ import {
   SEARCHING_TWITTER_USERS,
   SEARCHING_TWITTER_USERS_ERROR,
   SEARCHING_TWITTER_USERS_SUCCESS,
+  CLEAR_TWITTER_USERS,
 } from '../constants/action-types';
 
 const initialState = {
@@ -28,6 +29,10 @@ export default function twitterReducer(state = initialState, action) {
       return generateNewState(state, {
         loading: false,
         users: action.users,
+      });
+    case CLEAR_TWITTER_USERS:
+      return generateNewState(state, {
+        users: [],
       });
     default:
       return state;

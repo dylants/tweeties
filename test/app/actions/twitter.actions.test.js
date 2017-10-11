@@ -84,4 +84,21 @@ describe('twitter actions', () => {
       );
     });
   });
+
+  describe('clearTwitterUsers', () => {
+    let store;
+
+    beforeEach(() => {
+      store = mockStore();
+    });
+
+    it('should dispatch properly', () =>
+      store.dispatch(twitterActions.clearTwitterUsers())
+      .then(() => {
+        expect(store.getActions()).toEqual([{
+          type: types.CLEAR_TWITTER_USERS,
+        }]);
+      }),
+    );
+  });
 });
