@@ -1,24 +1,27 @@
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { clearTwitterUsers, searchTwitterUsers } from '../../actions/twitter.actions';
 
 import TweetForm from '../../components/tweet-form/tweet-form.component';
 
-import { generateOptions } from '../../config/mocks/generators';
-
 import style from './home.container.scss';
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
-    options: [],
     tweet: '',
     tweets: [],
   }
 
-  handleSelectOption = (optionIndex) => {
+  handleSelectUser = (userIndex) => {
     let { tweet } = this.state;
-    const { username } = this.state.options[optionIndex];
+    const { users } = this.props.twitterState;
+    const { username } = users[userIndex];
 
-    // replace the last word with the username from the selected option
+    // replace the last word with the username from the selected user
     tweet = _(tweet)
             .split(' ')
             .dropRight()
@@ -26,10 +29,13 @@ export default class Home extends Component {
             .concat(`${username} `)
             .join(' ');
 
+    // update the state to reflect the tweet change
     this.setState({
-      options: [],
       tweet,
     });
+
+    // clear the list of twitter users since the user selected one
+    this.props.clearTwitterUsers();
   }
 
   handleSubmit = () => {
@@ -37,28 +43,27 @@ export default class Home extends Component {
 
     // add the tweet to the list of tweets, and reset the form
     this.setState({
-      options: [],
       tweet: '',
       tweets: tweets.concat(tweet),
     });
   }
 
   handleTextChange = (text) => {
-    let { options } = this.state;
-
-    // if the last 'word' starts with an '@', we need new options
+    // if the last 'word' starts with an '@', we need to search users
     if (_(text)
         .split(' ')
         .last()
         .startsWith('@')) {
-      options = generateOptions();
+      this.props.searchTwitterUsers();
     } else {
-      // else there should be no options. no options for you!
-      options = [];
+      // else if there are users, we should clear them
+      const { users } = this.props.twitterState;
+      if (users && users.length) {
+        this.props.clearTwitterUsers();
+      }
     }
 
     this.setState({
-      options,
       tweet: text,
     });
   }
@@ -78,14 +83,14 @@ export default class Home extends Component {
       <div className={style.main}>
         <div className={style.tweetForm}>
           <div className={style.heading}>
-            <div className={style.name}>Tweetier</div>
+            <div className={style.name}>Tweeties</div>
             <div className={style.tagline}>The Tweets of Champions</div>
           </div>
           <TweetForm
-            handleSelectOption={this.handleSelectOption}
+            handleSelectOption={this.handleSelectUser}
             handleSubmit={this.handleSubmit}
             handleTextChange={this.handleTextChange}
-            options={this.state.options}
+            options={this.props.twitterState.users}
             text={this.state.tweet}
           />
         </div>
@@ -97,3 +102,35 @@ export default class Home extends Component {
     );
   }
 }
+
+Home.propTypes = {
+  clearTwitterUsers: PropTypes.func.isRequired,
+  searchTwitterUsers: PropTypes.func.isRequired,
+  twitterState: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.any,
+    users: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })).isRequired,
+  }).isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    twitterState: state.twitterState,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    clearTwitterUsers,
+    searchTwitterUsers,
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);
