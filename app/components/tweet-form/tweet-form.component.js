@@ -4,6 +4,14 @@ import React, { Component } from 'react';
 import style from './tweet-form.component.scss';
 
 export default class TweetForm extends Component {
+  handleClickSubmit = (event) => {
+    event.preventDefault();
+    this.props.handleSubmit();
+
+    // they've cleared the text by submitting, so send empty text
+    this.props.handleTextChange('');
+  }
+
   handleKeyPress = (event) => {
     // when the user hits enter, "submit the form"
     if (event.key === 'Enter') {
@@ -13,13 +21,7 @@ export default class TweetForm extends Component {
         return;
       }
 
-      // don't submit on shift + enter
-      if (event.shiftKey) {
-        return;
-      }
-
-      event.preventDefault();
-      this.props.handleSubmit();
+      this.handleClickSubmit(event);
     }
   }
 
@@ -78,6 +80,14 @@ export default class TweetForm extends Component {
             ref={textRef => this.textRef = textRef}
             value={this.props.text}
           />
+          <div className={style.buttonWrapper}>
+            <button
+              className={style.button}
+              disabled={!this.props.text}
+              onClick={this.handleClickSubmit}
+              type="submit"
+            >Tweet</button>
+          </div>
         </form>
         {optionsBox}
       </div>

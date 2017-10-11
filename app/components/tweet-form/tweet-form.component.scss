@@ -2,11 +2,13 @@
 
 .form {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
 }
 
 .textarea {
   resize: none;
-  width: 400px;
   height: 100px;
   border: 2px solid $swatch07;
   border-radius: 9px;
@@ -24,12 +26,40 @@
   }
 }
 
+$button-height: 30px;
+$button-margin: 8px;
+
+.button {
+  float: right;
+  height: $button-height;
+  margin: 0;
+  margin-top: $button-margin;
+  border-radius: 32px;
+  padding: 6px 12px;
+  color: $swatch02;
+  background-color: $swatch09;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:hover {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
+}
+
 .options {
   border: 1px solid $swatch03;
   position: absolute;
   display: inline;
-  // move up a pixel to hide the top border
-  margin-top: -1px;
+  // move up above the button height (+1 for the border)
+  margin-top: -#{$button-height + $button-margin + 1};
   background-color: $swatch02;
   margin-left: 4px;
   box-shadow: 0 0 4px $swatch03;
