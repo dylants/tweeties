@@ -11,6 +11,7 @@ import config from '../config';
 const APP_ROOT = path.join(__dirname, '../../');
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const API_ONLY = process.env.API_ONLY;
 
 const app = express();
 
@@ -44,22 +45,25 @@ hook({
  * ------------------------------------------ */
 
 if (IS_DEVELOPMENT) {
-  /*
-   * only load these dependencies if we are not in production to avoid
-   * requiring them in production mode (since they are only required in dev)
-   */
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const webpackConfig = require('../../webpack.config.development');
+  // when the user specifies API_ONLY, we should NOT load webpack configuration
+  if (!API_ONLY) {
+    /*
+     * only load these dependencies if we are not in production to avoid
+     * requiring them in production mode (since they are only required in dev)
+     */
+    const webpack = require('webpack');
+    const webpackDevMiddleware = require('webpack-dev-middleware');
+    const webpackHotMiddleware = require('webpack-hot-middleware');
+    const webpackConfig = require('../../webpack.config.development');
 
-  // configure webpack middleware
-  const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    stats: 'minimal',
-  }));
-  app.use(webpackHotMiddleware(compiler));
+    // configure webpack middleware
+    const compiler = webpack(webpackConfig);
+    app.use(webpackDevMiddleware(compiler, {
+      publicPath: webpackConfig.output.publicPath,
+      stats: 'minimal',
+    }));
+    app.use(webpackHotMiddleware(compiler));
+  }
 }
 
 /* ------------------------------------------ *
