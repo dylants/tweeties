@@ -24,6 +24,10 @@ To start the application (in development mode), run the following command:
 $ npm start
 ```
 
+The application will then be viewable at: [http://localhost:3000](http://localhost:3000)
+
+### Production ###
+
 For production, run the following commands:
 
 ```
@@ -33,6 +37,14 @@ $ npm run build
 
 $ npm run production
 ```
+
+The application will be viewable on port 3000 (by default).
+
+## Configuration ##
+
+Configuration for the application is available within the `app/config/index.js` file.
+
+Additionally, some configuration is stored outside of source control, and available within a "private" configuration file. This configuration is located at (or at least should be located at): `app/config/private-config.json`. Secret keys and the like should be stored within this file, and are accessed via the `app/lib/private-config.js` library internally.
 
 ## Tests ##
 
