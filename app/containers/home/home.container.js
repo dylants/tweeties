@@ -60,9 +60,10 @@ class Home extends Component {
     // our twitter user search only deals with the last word at the moment...
     const lastWord = _(text).split(' ').last();
 
-    // if the last 'word' starts with an '@', and it's more than just the '@' sign,
+    // if the last 'word' starts with an '@',
+    // and it's more than just the '@' sign plus 2 characters,
     // we need to search users
-    if (lastWord.startsWith('@') && lastWord.length > 1) {
+    if (lastWord.startsWith('@') && lastWord.length > 3) {
       // if we're already waiting to search, clear the last search
       if (this.searchTwitterUsersTimeout) {
         clearTimeout(this.searchTwitterUsersTimeout);
@@ -107,6 +108,7 @@ class Home extends Component {
             <div className={style.tagline}>The Tweets of Champions</div>
           </div>
           <TweetForm
+            handleClearOptions={this.props.clearTwitterUsers}
             handleSelectOption={this.handleSelectUser}
             handleSubmit={this.handleSubmit}
             handleTextChange={this.handleTextChange}
