@@ -82,6 +82,11 @@ class Home extends Component {
       if (users && users.length) {
         this.props.clearTwitterUsers();
       }
+
+      // and clear the timeout (if it exists)
+      if (this.searchTwitterUsersTimeout) {
+        clearTimeout(this.searchTwitterUsersTimeout);
+      }
     }
 
     this.setState({
