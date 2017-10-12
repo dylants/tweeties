@@ -61,9 +61,9 @@ class Home extends Component {
     const lastWord = _(text).split(' ').last();
 
     // if the last 'word' starts with an '@',
-    // and it's more than just the '@' sign plus 2 characters,
+    // and it's more than just the '@' sign plus 1 character,
     // we need to search users
-    if (lastWord.startsWith('@') && lastWord.length > 3) {
+    if (lastWord.startsWith('@') && lastWord.length > 2) {
       // if we're already waiting to search, clear the last search
       if (this.searchTwitterUsersTimeout) {
         clearTimeout(this.searchTwitterUsersTimeout);
